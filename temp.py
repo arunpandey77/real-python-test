@@ -1,5 +1,8 @@
 import sqlite3 as sq
-conn = sq.connect("cars.db")
-cursor = conn.cursor()
-cursor.execute("""CREATE TABLE INVENTORY(make TEXT, model TEXT, quantity INT)""")
-conn.close()
+with sq.connect("new.db") as connection:
+    c = connection.cursor()
+    pops = [("delhi","delhi",12345),("sidhi","MP",12121212)]
+    try:
+        c.executemany("INSERT INTO population VALUES(?,?,?)",pops)
+    except sq.OperationalError:
+        print("oops something is wrong")
